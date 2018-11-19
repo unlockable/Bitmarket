@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+		<link rel="stylesheet" href="css/bootstrap.min_ex.css">
+		
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/login.css">
+		<script type="text/javascript" src="/js/date_select.js"></script>		
+		<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript" src="/js/web3.min.js"></script>
+        <script type="text/javascript" src="/js/ethereumjs-tx.js"></script>
+		<script type="text/javascript">
+		
+		var bettingContractByteCode = "606060405234156200001057600080fd5b604051620025563803806200255683398101604052808051820191906020018051820191906020018051820191906020018051909101905060058480516200005d92916020019062000766565b5060068380516200007392916020019062000766565b5060078280516200008992916020019062000766565b5060088180516200009f92916020019062000766565b506000600b819055600c819055600d819055600e8190558054600160a060020a03191673cbb88841d331d01634cbfee7d40e6fd2c0551344179055620001137f110000000000000000000000000000000000000000000000000000000000000064010000000062001b606200011d82021704565b5050505062000808565b600054600160a060020a031615806200015857506000546200015690600160a060020a03166401000000006200169a6200034982021704565b155b156200017a576200017860006401000000006200169e6200034d82021704565b505b60008054600160a060020a0316906338cc483190604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b1515620001dd57600080fd5b6102c65a03f11515620001ef57600080fd5b5050506040518051600154600160a060020a039081169116149050620002ae5760008054600160a060020a0316906338cc483190604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b15156200027257600080fd5b6102c65a03f115156200028457600080fd5b505050604051805160018054600160a060020a031916600160a060020a0392909216919091179055505b600154600160a060020a031663688dcfd7826040517c010000000000000000000000000000000000000000000000000000000063ffffffff84160281527fff000000000000000000000000000000000000000000000000000000000000009091166004820152602401600060405180830381600087803b15156200033157600080fd5b6102c65a03f115156200034357600080fd5b50505050565b3b90565b600062000367640100000000620017566200036d82021704565b92915050565b6000806200039d731d3b2638a7cc9f2cb3d298a3da7a90b67e5506ed6401000000006200169a6200034982021704565b11156200041f5760008054600160a060020a031916731d3b2638a7cc9f2cb3d298a3da7a90b67e5506ed1790556200041660408051908101604052600b81527f6574685f6d61696e6e6574000000000000000000000000000000000000000000602082015264010000000062001a7a6200074d82021704565b5060016200074a565b60006200044e73c03a2615d5efaf5f49f60b7bb6583eaec212fdf16401000000006200169a6200034982021704565b1115620004c75760008054600160a060020a03191673c03a2615d5efaf5f49f60b7bb6583eaec212fdf11790556200041660408051908101604052600c81527f6574685f726f707374656e330000000000000000000000000000000000000000602082015264010000000062001a7a6200074d82021704565b6000620004f673b7a07bcf2ba2f2703b24c0691b5278999c59ac7e6401000000006200169a6200034982021704565b11156200056f5760008054600160a060020a03191673b7a07bcf2ba2f2703b24c0691b5278999c59ac7e1790556200041660408051908101604052600981527f6574685f6b6f76616e0000000000000000000000000000000000000000000000602082015264010000000062001a7a6200074d82021704565b60006200059e73146500cfd35b22e4a392fe0adc06de1a1368ed486401000000006200169a6200034982021704565b1115620006175760008054600160a060020a03191673146500cfd35b22e4a392fe0adc06de1a1368ed481790556200041660408051908101604052600b81527f6574685f72696e6b656279000000000000000000000000000000000000000000602082015264010000000062001a7a6200074d82021704565b600062000646736f485c8bf6fc43ea212e93bbf8ce046c7f1cb4756401000000006200169a6200034982021704565b11156200067c575060008054600160a060020a031916736f485c8bf6fc43ea212e93bbf8ce046c7f1cb47517905560016200074a565b6000620006ab7320e12a1f859b3feae5fb2a0a32c18f5a65555bbf6401000000006200169a6200034982021704565b1115620006e1575060008054600160a060020a0319167320e12a1f859b3feae5fb2a0a32c18f5a65555bbf17905560016200074a565b6000620007107351efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa6401000000006200169a6200034982021704565b111562000746575060008054600160a060020a0319167351efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa17905560016200074a565b5060005b90565b60028180516200076292916020019062000766565b5050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f10620007a957805160ff1916838001178555620007d9565b82800160010185558215620007d9579182015b82811115620007d9578251825591602001919060010190620007bc565b50620007e7929150620007eb565b5090565b6200074a91905b80821115620007e75760008155600101620007f2565b611d3e80620008186000396000f3006060604052600436106100d75763ffffffff60e060020a6000350416630866ebe381146100dc5780631499ee1f146100e957806327dc297e146101735780632bb10385146101c9578063381af4a8146101ee57806338bbfa501461020457806346b676311461029c5780635600f04f146102af57806356217eb3146102c25780638129836f146102f4578063862b90c7146103075780638701a2f01461031d57806399892e4714610325578063a5ef574614610338578063e5aa3d581461034b578063e74c4f881461035e578063ecc9db2f14610371575b600080fd5b6100e7600435610387565b005b34156100f457600080fd5b6100fc61045c565b60405160208082528190810183818151815260200191508051906020019080838360005b83811015610138578082015183820152602001610120565b50505050905090810190601f1680156101655780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561017e57600080fd5b6100e7600480359060446024803590810190830135806020601f820181900481020160405190810160405281815292919060208401838380828437509496506104fa95505050505050565b34156101d457600080fd5b6101dc61052c565b60405190815260200160405180910390f35b34156101f957600080fd5b6101dc600435610532565b341561020f57600080fd5b6100e7600480359060446024803590810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284378201915050505050509190803590602001908201803590602001908080601f01602080910402602001604051908101604052818152929190602084018383808284375094965061055195505050505050565b34156102a757600080fd5b6101dc610b56565b34156102ba57600080fd5b6100fc610b5c565b34156102cd57600080fd5b6102d8600435610bc7565b604051600160a060020a03909116815260200160405180910390f35b34156102ff57600080fd5b6101dc610be2565b341561031257600080fd5b6101dc600435610be8565b6100e7610bf6565b341561033057600080fd5b6100fc610ccf565b341561034357600080fd5b6101dc610d3a565b341561035657600080fd5b6101dc610d40565b341561036957600080fd5b6100fc610d46565b341561037c57600080fd5b6102d8600435610db1565b80600114156103f457600b8054600180820190925560009081526009602052604090208054600160a060020a03191633600160a060020a0316179055600f8054909181016103d58382611a8d565b5060009182526020909120349101819055600d80549091019055610459565b80600214156100d757601080546001810161040f8382611a8d565b5060009182526020808320349201829055600c8054600181019091558352600a905260409091208054600160a060020a03191633600160a060020a0316179055600e805490910190555b50565b60088054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104f25780601f106104c7576101008083540402835291602001916104f2565b820191906000526020600020905b8154815290600101906020018083116104d557829003601f168201915b505050505081565b6105288282600060405180591061050e5750595b818152601f19601f83011681016020016040529050610551565b5050565b600d5481565b601080548290811061054057fe5b600091825260209091200154905081565b610559610dcc565b600160a060020a031633600160a060020a031614151561057857600080fd5b600160a060020a03301631601255600b5415156105ef5760006011555b600c5460115410156100d7576011546000908152600a60205260409081902054600160a060020a0390811691309091163180156108fc029151600060405180830381858888f1505060118054600101905550610595915050565b600c5415156106585760006011555b600b5460115410156100d7576011546000908152600960205260409081902054600160a060020a0390811691309091163180156108fc029151600060405180830381858888f15050601180546001019055506105fe915050565b6107136106fe60078054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156106f45780601f106106c9576101008083540402835291602001916106f4565b820191906000526020600020905b8154815290600101906020018083116106d757829003601f168201915b5050505050610f6d565b61070784610f6d565b9063ffffffff610f9516565b156107a35760006011555b600b54601154101561079e57601154600081815260096020526040902054600d54600f8054600160a060020a03909316936108fc93811061075b57fe5b9060005260206000209001546012540281151561077457fe5b049081150290604051600060405180830381858888f150506011805460010190555061071e915050565b610b51565b6108146106fe60088054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156106f45780601f106106c9576101008083540402835291602001916106f4565b1561089f5760006011555b600c54601154101561079e576011546000818152600a6020526040902054600e5460108054600160a060020a03909316936108fc93811061085c57fe5b9060005260206000209001546012540281151561087557fe5b049081150290604051600060405180830381858888f150506011805460010190555061081f915050565b6108de6106fe60408051908101604052600481527f64726177000000000000000000000000000000000000000000000000000000006020820152610f6d565b156109cd5760006011555b600b54601154101561095857601154600081815260096020526040902054600f8054600160a060020a03909216926108fc92811061092357fe5b9060005260206000209001549081150290604051600060405180830381858888f15050601180546001019055506108e9915050565b60006011555b600c54601154101561079e576011546000818152600a602052604090205460108054600160a060020a03909216926108fc92811061099857fe5b9060005260206000209001549081150290604051600060405180830381858888f150506011805460010190555061095e915050565b600154600160a060020a0330811631911663524f388960006040516020015260405160e060020a63ffffffff8316028152602060048201819052600360248301527f55524c0000000000000000000000000000000000000000000000000000000000604483015260649091019060405180830381600087803b1515610a5157600080fd5b6102c65a03f11515610a6257600080fd5b505050604051805190501015610b5157610b4f620151806040805190810160405280600381526020017f55524c000000000000000000000000000000000000000000000000000000000081525060068054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610b455780601f10610b1a57610100808354040283529160200191610b45565b820191906000526020600020905b815481529060010190602001808311610b2857829003601f168201915b5050505050610fa9565b505b505050565b600e5481565b60068054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104f25780601f106104c7576101008083540402835291602001916104f2565b600960205260009081526040902054600160a060020a031681565b600c5481565b600f80548290811061054057fe5b6104596040805190810160405280600381526020017f55524c000000000000000000000000000000000000000000000000000000000081525060068054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610cc55780601f10610c9a57610100808354040283529160200191610cc5565b820191906000526020600020905b815481529060010190602001808311610ca857829003601f168201915b5050505050611322565b60058054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104f25780601f106104c7576101008083540402835291602001916104f2565b600b5481565b60115481565b60078054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104f25780601f106104c7576101008083540402835291602001916104f2565b600a60205260009081526040902054600160a060020a031681565b60008054600160a060020a03161580610df75750600054610df590600160a060020a031661169a565b155b15610e0857610e06600061169e565b505b60008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b1515610e5157600080fd5b6102c65a03f11515610e6257600080fd5b5050506040518051600154600160a060020a039081169116149050610f055760008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b1515610eca57600080fd5b6102c65a03f11515610edb57600080fd5b505050604051805160018054600160a060020a031916600160a060020a0392909216919091179055505b600154600160a060020a031663c281d19e6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b1515610f4d57600080fd5b6102c65a03f11515610f5e57600080fd5b50505060405180519150505b90565b610f75611ab1565b602082016040805190810160405280845181526020019190915292915050565b6000610fa183836116ae565b159392505050565b600080548190600160a060020a03161580610fd65750600054610fd490600160a060020a031661169a565b155b15610fe757610fe5600061169e565b505b60008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561103057600080fd5b6102c65a03f1151561104157600080fd5b5050506040518051600154600160a060020a0390811691161490506110e45760008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b15156110a957600080fd5b6102c65a03f115156110ba57600080fd5b505050604051805160018054600160a060020a031916600160a060020a0392909216919091179055505b600154600160a060020a031663524f3889856000604051602001526040518263ffffffff1660e060020a0281526004018080602001828103825283818151815260200191508051906020019080838360005b8381101561114e578082015183820152602001611136565b50505050905090810190601f16801561117b5780820380516001836020036101000a031916815260200191505b5092505050602060405180830381600087803b151561119957600080fd5b6102c65a03f115156111aa57600080fd5b5050506040518051915050670de0b6b3a764000062030d403a02018111156111d5576000915061131a565b600154600160a060020a031663adf59f99828787876000604051602001526040518563ffffffff1660e060020a028152600401808481526020018060200180602001838103835285818151815260200191508051906020019080838360005b8381101561124c578082015183820152602001611234565b50505050905090810190601f1680156112795780820380516001836020036101000a031916815260200191505b50838103825284818151815260200191508051906020019080838360005b838110156112af578082015183820152602001611297565b50505050905090810190601f1680156112dc5780820380516001836020036101000a031916815260200191505b50955050505050506020604051808303818588803b15156112fc57600080fd5b6125ee5a03f1151561130d57600080fd5b5050505060405180519250505b509392505050565b600080548190600160a060020a0316158061134f575060005461134d90600160a060020a031661169a565b155b156113605761135e600061169e565b505b60008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b15156113a957600080fd5b6102c65a03f115156113ba57600080fd5b5050506040518051600154600160a060020a03908116911614905061145d5760008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561142257600080fd5b6102c65a03f1151561143357600080fd5b505050604051805160018054600160a060020a031916600160a060020a0392909216919091179055505b600154600160a060020a031663524f3889856000604051602001526040518263ffffffff1660e060020a0281526004018080602001828103825283818151815260200191508051906020019080838360005b838110156114c75780820151838201526020016114af565b50505050905090810190601f1680156114f45780820380516001836020036101000a031916815260200191505b5092505050602060405180830381600087803b151561151257600080fd5b6102c65a03f1151561152357600080fd5b5050506040518051915050670de0b6b3a764000062030d403a020181111561154e5760009150611693565b600154600160a060020a031663adf59f99826000878782604051602001526040518563ffffffff1660e060020a028152600401808481526020018060200180602001838103835285818151815260200191508051906020019080838360005b838110156115c55780820151838201526020016115ad565b50505050905090810190601f1680156115f25780820380516001836020036101000a031916815260200191505b50838103825284818151815260200191508051906020019080838360005b83811015611628578082015183820152602001611610565b50505050905090810190601f1680156116555780820380516001836020036101000a031916815260200191505b50955050505050506020604051808303818588803b151561167557600080fd5b6125ee5a03f1151561168657600080fd5b5050505060405180519250505b5092915050565b3b90565b60006116a8611756565b92915050565b600080808080808080808a5197508a518a5110156116cb57895197505b8a60200151965089602001519550600094505b8785101561174057865193508551925083831461172c576000199150602088101561171657600185896020030160080260020a031991505b5081811683821603801561172c57809850611748565b6020968701969586019594909401936116de565b89518b510398505b505050505050505092915050565b600080611776731d3b2638a7cc9f2cb3d298a3da7a90b67e5506ed61169a565b11156117e65760008054600160a060020a031916731d3b2638a7cc9f2cb3d298a3da7a90b67e5506ed1790556117de60408051908101604052600b81527f6574685f6d61696e6e65740000000000000000000000000000000000000000006020820152611a7a565b506001610f6a565b600061180573c03a2615d5efaf5f49f60b7bb6583eaec212fdf161169a565b111561186d5760008054600160a060020a03191673c03a2615d5efaf5f49f60b7bb6583eaec212fdf11790556117de60408051908101604052600c81527f6574685f726f707374656e3300000000000000000000000000000000000000006020820152611a7a565b600061188c73b7a07bcf2ba2f2703b24c0691b5278999c59ac7e61169a565b11156118f45760008054600160a060020a03191673b7a07bcf2ba2f2703b24c0691b5278999c59ac7e1790556117de60408051908101604052600981527f6574685f6b6f76616e00000000000000000000000000000000000000000000006020820152611a7a565b600061191373146500cfd35b22e4a392fe0adc06de1a1368ed4861169a565b111561197b5760008054600160a060020a03191673146500cfd35b22e4a392fe0adc06de1a1368ed481790556117de60408051908101604052600b81527f6574685f72696e6b6562790000000000000000000000000000000000000000006020820152611a7a565b600061199a736f485c8bf6fc43ea212e93bbf8ce046c7f1cb47561169a565b11156119ce575060008054600160a060020a031916736f485c8bf6fc43ea212e93bbf8ce046c7f1cb4751790556001610f6a565b60006119ed7320e12a1f859b3feae5fb2a0a32c18f5a65555bbf61169a565b1115611a21575060008054600160a060020a0319167320e12a1f859b3feae5fb2a0a32c18f5a65555bbf1790556001610f6a565b6000611a407351efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa61169a565b1115611a74575060008054600160a060020a0319167351efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa1790556001610f6a565b50600090565b6002818051610528929160200190611ac8565b815481835581811511610b5157600083815260209020610b51918101908301611b46565b604080519081016040526000808252602082015290565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f10611b0957805160ff1916838001178555611b36565b82800160010185558215611b36579182015b82811115611b36578251825591602001919060010190611b1b565b50611b42929150611b46565b5090565b610f6a91905b80821115611b425760008155600101611b4c565b600054600160a060020a03161580611b8a5750600054611b8890600160a060020a031661169a565b155b15611b9b57611b99600061169e565b505b60008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b1515611be457600080fd5b6102c65a03f11515611bf557600080fd5b5050506040518051600154600160a060020a039081169116149050611c985760008054600160a060020a0316906338cc483190604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b1515611c5d57600080fd5b6102c65a03f11515611c6e57600080fd5b505050604051805160018054600160a060020a031916600160a060020a0392909216919091179055505b600154600160a060020a031663688dcfd78260405160e060020a63ffffffff84160281527fff000000000000000000000000000000000000000000000000000000000000009091166004820152602401600060405180830381600087803b1515611d0157600080fd5b6102c65a03f11515610b4f57600080fd00a165627a7a7230582040cf8ab98f737092e8c8c905d729ed323bc463209b2e867a3268ced55eaadc4e0029";
+		var bettingContractABI = [{"constant":false,"inputs":[{"name":"team","type":"uint256"}],"name":"betOnTeam","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"awayCode","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"myid","type":"bytes32"},{"name":"result","type":"string"}],"name":"__callback","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"homeTotal","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"awayRates","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"myid","type":"bytes32"},{"name":"result","type":"string"},{"name":"proof","type":"bytes"}],"name":"__callback","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"awayTotal","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"url","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"homeBetholders","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"awaycnt","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"homeRates","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"finishBet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"matchId","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"homecnt","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"i","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"homeCode","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"awayBetholders","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_matchId","type":"string"},{"name":"_url","type":"string"},{"name":"_homeCode","type":"string"},{"name":"_awayCode","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
+		var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+
+		function getAJAXObject()
+		{
+			var request;
+			if (window.XMLHttpRequest) {
+				request = new XMLHttpRequest();
+			} else if (window.ActiveXObject) {
+				try {
+					request = new ActiveXObject("Msxml2.XMLHTTP");
+				} catch (e) {
+					try {
+						request = new ActiveXObject("Microsoft.XMLHTTP");
+					} catch (e) {}
+				}
+			}
+
+			return request;
+		}
+			$(document).ready(function() {
+				$('a.login-window').click(function() {
+					if($('#loginButton').text() == "logout"){
+						$('#loginButton').text("login");
+						localStorage.removeItem('ID');
+						localStorage.removeItem('pass');						
+						window.location.reload();
+					}
+					
+					// Getting the variable's value from a link 
+					var loginBox = $(this).attr('href');
+
+					//Fade in the Popup and add close button
+					$(loginBox).fadeIn(300);
+					
+					//Set the center alignment padding + border
+					var popMargTop = ($(loginBox).height() + 24) / 2; 
+					var popMargLeft = ($(loginBox).width() + 24) / 2; 
+					
+					$(loginBox).css({ 
+						'margin-top' : -popMargTop,
+						'margin-left' : -popMargLeft
+					});
+					
+					// Add the mask to body
+					$('body').append('<div id="mask"></div>');
+					$('#mask').fadeIn(300);
+					
+					return false;
+				});
+				
+			
+				$('#signIn').click(function() {
+					account_id = $('#username').val();
+					pass = $('#password').val();
+					
+					localStorage.setItem('ID', account_id);
+					localStorage.setItem('pass', pass);					
+					$('#loginButton').text("logout");
+					$('#mask , .login-popup').fadeOut(300 , function() {
+						$('#mask').remove();  
+					}); 
+					window.location.reload();
+				});
+				
+				$('#betButton').click(function() {
+					//team = jQuery(this).attr("name");
+					/*
+					$('#mask , .login-popup').fadeOut(300 , function() {
+						$('#mask').remove();  
+					});*/
+					bet();
+				});
+				
+				// When clicking on the button close or the mask layer the popup closed
+				$('div').on('click', 'a.close', function() { 
+				  $('#mask , .login-popup').fadeOut(300 , function() {
+					$('#mask').remove();  
+				  }); 
+				return false;
+				});
+			});
+		</script>
+
+		<script>
+			function chageEthSelect(){
+				var selectedEth = (Number($("#betAmount option:selected").val()));
+				if(team == "home"){
+					$("#expectedAmount").text(selectedEth * ((homeTotal+awayTotal+selectedEth)/(homeTotal+selectedEth)).toFixed(2));
+				} else {
+					$("#expectedAmount").text(selectedEth * ((homeTotal+awayTotal+selectedEth)/(awayTotal+selectedEth)).toFixed(2));
+				}
+			}
+			$(document).ready(function() { 
+				var Now = new Date();
+				var date;
+				date = Now.getFullYear();
+				if(Now.getMonth()+1 < 10){
+					date += "-" + "0" + (Now.getMonth()+1);
+				}else{
+					date += "-" + (Now.getMonth()+1);
+				}
+				if(Now.getDate() < 10){
+					date += "-" + "0" + Now.getDate();
+				}else{
+					date += "-" + Now.getDate();
+				}
+				
+				loadDoc(date, 0); 
+				
+				if(localStorage.getItem('ID') != null){
+					$('#loginButton').text("logout");
+					account_id = localStorage.getItem('ID');
+					pass = localStorage.getItem('pass');					
+				}
+			});
+			
+			function createContract(fromAddress, passwd, matchId, index, homeCode, awayCode) {
+				var privateKey;
+				var url = "/getURL?matchId=" + matchId + "&fromAddress=" + fromAddress + "&passwd=" + passwd;
+				var request = getAJAXObject();
+				var	date = $("#"+matchId).prev().prev().prev().prev().text();
+				var time = $("#"+matchId).prev().prev().prev().text();
+				var title = $("#"+matchId).prev().prev().text();
+				var teams = $("#"+matchId).prev().text();
+
+				request.open("GET", url);
+				
+				request.onreadystatechange = function() {
+					if (request.readyState == 4) {
+						if (request.status == 200) {
+							if(request.responseText != "An error occured") {
+								privateKey = "0x" + request.responseText;
+								var queryURL = "json(https://api.sportradar.us/soccer-t3/eu/en/schedules/" + date + "/results.json?api_key=uyd2g5h6r3227whgzwuwakk6).results["+index+"]['sport_event_status'].winner_id";
+								var contract = web3.eth.contract(bettingContractABI);
+								var data = contract.new.getData(matchId, queryURL, homeCode, awayCode, {
+									data: bettingContractByteCode
+								});
+
+								var gasRequired = web3.eth.estimateGas({
+									data: "0x" + data
+								});
+
+								$('#test_query').text(data);
+								web3.eth.getTransactionCount(fromAddress, function(error, nonce){
+									var rawTx = {
+										gasPrice: web3.toHex(web3.eth.gasPrice),
+										gasLimit: web3.toHex(gasRequired),
+										from: fromAddress,
+										nonce: web3.toHex(nonce),
+										data: "0x" + data,
+									};
+
+									privateKey = EthJS.Util.toBuffer(privateKey, "hex");
+									var tx = new EthJS.Tx(rawTx);
+									tx.sign(privateKey);
+
+									web3.eth.sendRawTransaction("0x" + tx.serialize().toString("hex"), function(err, hash) {
+										if (!err) {
+											//document.querySelector("#message").innerHTML = "Transaction Hash: " + hash + ". Transaction is mining...";
+
+											var timer = window.setInterval(function() {
+												web3.eth.getTransactionReceipt(hash, function(err, result) {
+													if (result) 	{
+														window.clearInterval(timer);
+														//document.querySelector("#message").innerHTML = "Transaction Hash: " + hash + " and contract address is: " + result.contractAddress;
+														//alert(hash);
+														
+														var xquery = new XMLHttpRequest();
+														var url = "/createCon?matchId="+matchId+"&contractId="+result.contractAddress+"&date="+date+"&time="+time+
+														"&title="+title+"&teams="+teams;
+														xquery.open("GET", url, true);
+														xquery.onreadystatechange = function() {
+															  if (xquery.readyState == 4) {
+																if (xquery.status == 200) {
+																	alert("배팅 생성 완료");
+																	//$('#'+matchId).text("배팅 생성완료");
+																}
+																else {
+																	alert("배팅 생성 실패");
+																}
+															  }
+														}
+														xquery.send();
+													}
+												})
+											}, 5000)
+										} else {
+											alert(err);
+											//document.querySelector("#message").innerHTML = err;
+										}
+									});
+								})
+							}
+						}
+					}
+				};
+				request.send(null);
+			}
+			
+			function bet(){				
+				//var team = "Away"; //Home 팀을 기본 팀으로 설정
+				var privateKey;
+				var url = "/getURL?matchId=" + matchId + "&fromAddress=" + fromAddress + "&passwd=" + passwd;
+				var request = getAJAXObject();
+				
+				request.open("GET", url);
+
+				request.onreadystatechange = function() {
+					if (request.readyState == 4) {
+						if (request.status == 200) {
+							if(request.responseText != "An error occured") {
+								privateKey = "0x" + request.responseText;
+
+								if(team == "home")	{
+									team = 1;
+								} else {
+									team = 2;
+								} 
+
+								var contract = web3.eth.contract(bettingContractABI).at(contractAddress);
+								var amount = $("#betAmount option:selected").val();
+								amount = web3.toWei(amount, "ether");
+							//	var amount = contract.amount();
+
+								var data = contract.betOnTeam.getData(team);
+								var gasRequired = contract.betOnTeam.estimateGas(team, {
+									from: fromAddress,
+									value: amount,
+									to: contractAddress
+								})
+
+								web3.eth.getTransactionCount(fromAddress, function(error, nonce){
+
+									var rawTx = {
+										gasPrice: web3.toHex(web3.eth.gasPrice),
+										gasLimit: web3.toHex(gasRequired),
+										from: fromAddress,
+										nonce: web3.toHex(nonce),
+										data: data,
+										to: contractAddress,
+										value: web3.toHex(amount)
+									};
+									
+									privateKey = EthJS.Util.toBuffer(privateKey, "hex");
+									var tx = new EthJS.Tx(rawTx);
+									tx.sign(privateKey);
+
+									web3.eth.sendRawTransaction("0x" + tx.serialize().toString("hex"), function(err, hash) {
+										if (!err) {
+											//document.querySelector("#message").innerHTML = "Transaction Hash: " + hash;
+											
+											var xquery = new XMLHttpRequest();
+											
+											var homeAmount = 0;
+											var awayAmount = 0;
+											
+											if(team == 1){
+												homeAmount = $("#betAmount option:selected").val();
+											}
+											else{
+												awayAmount = $("#betAmount option:selected").val();
+											}
+											var	date = $("#"+matchId).prev().prev().prev().prev().text();
+											var url = "/bet?matchId="+matchId+"&homeAmount="+homeAmount+"&awayAmount="+awayAmount;
+											xquery.open("GET", url, true);
+											xquery.onreadystatechange = function() {
+												  if (xquery.readyState == 4) {
+													if (xquery.status == 200) {
+														alert("배팅완료");
+														window.location.reload();	
+														//document.querySelector("#message").innerHTML = "DB 등록완료"
+													}
+													else {
+														alert("err1");
+													}
+												  }
+											}
+											xquery.send();											 
+										} else {
+											;
+											//document.querySelector("#message").innerHTML = err;
+										}
+									})
+								})
+							}
+						}
+					}
+				};
+				request.send(null);
+				
+			}
+
+
+			function loadDoc(date, sports){
+				// When click button			
+				
+				if(date == 1){
+					date = $("#year").val();
+					if($("#month").val() < 10){
+						date += "-" + "0" + $("#month").val();
+					}else{
+						date += "-" + $("#month").val();
+					}
+					if($("#day").val() < 10){
+						date += "-" + "0" + $("#day").val();	
+					}else{
+						date += "-" + $("#day").val();				
+					}				
+				}
+				
+				var xhr = new XMLHttpRequest();
+				var url;
+				if(sports == 0){
+					sports = "<%=game%>";
+					lastSports = sports;
+				} else if(sports == 1){
+					sports = lastSports;
+				} else {
+					lastSports = sports;
+				}
+				//var sports = "<%=game%>";
+				
+				switch (sports){
+					case "lol":
+					url= "https://api.sportradar.us/lol-t1/en/schedules/"+ date;
+					<% if(action != 'bet'){ %>
+						url += "/schedule.json?api_key=rw3342w2uxzdkpg2p59w9chw";
+					<% }else{ %>					
+						url += "/results.json?api_key=rw3342w2uxzdkpg2p59w9chw"; 
+					<% } %>
+					break;
+					case "soccer":
+					url = "https://api.sportradar.us/soccer-t3/eu/en/schedules/"+ date;
+					<% if(action != 'bet'){ %>
+						url += "/schedule.json?api_key=uyd2g5h6r3227whgzwuwakk6";
+					<% }else{ %>
+						url += "/results.json?api_key=uyd2g5h6r3227whgzwuwakk6"; 
+					<% } %>
+					break;
+				}
+					<% if(action == 'bet'){ %> 
+						var xquery = new XMLHttpRequest();
+						var url = "/loadContract?date="+date;
+						xquery.open("GET", url, true);
+
+						xquery.onreadystatechange = function() {
+							  if (xquery.readyState == 4) {
+								if (xquery.status == 200) {
+									q = JSON.parse(xquery.responseText);
+									if(q == "" || q == null || q == undefined || ( q != null && typeof q == "object" && !Object.keys(q).length )){
+										alert("가능한 배팅이 없습니다.");
+									}
+									t = "";
+									
+									for(i = 0; i < q.length; i++){	
+									
+										totalAmount = q[i].homeTeam+q[i].awayTeam;
+										var homeRate;
+										var awayRate;
+										homeTotal = q[i].homeTeam;
+										awayTotal = q[i].awayTeam;
+										if(q[i].homeTeam == 0 && q[i].awayTeam == 0){
+											homeRate = "1.00";											
+											awayRate = "1.00";
+										} else {
+											if(q[i].homeTeam != 0){
+												homeRate = (totalAmount/q[i].homeTeam).toFixed(2);
+											} else {
+												homeRate = totalAmount.toFixed(2);
+											}
+											if(q[i].awayTeam != 0){
+												awayRate = (totalAmount/q[i].awayTeam).toFixed(2);										
+											} else {
+												awayRate = totalAmount.toFixed(2);
+											}
+										 }
+										var selectedAmount = $("#betAmount option:selected").val();
+										t = t + "<tr><td>"
+										 + q[i].time + "</td><td>"
+										 + q[i].title + "</td><td>"
+										 + q[i].teams;
+										
+										t += "</td><td style='margin: 5px;' class='btn btn-success btn-sm' team='home' id ="+q[i].matchID+" contract_id ="+q[i].contractID+" time=" +q[i].time+">"
+										 + homeRate + "</td><td></td><td style='margin: 5px;' class='btn btn-success btn-sm' team='away' id ="+q[i].matchID +" contract_id ="+q[i].contractID+" time=" +q[i].time+">"
+										 + awayRate + "</td></tr>";
+										 
+										 								 
+										 
+										
+										//t += q[i].matchID + q[i].contractID + "<br>"; 	
+										$(document).on("click","#"+q[i].matchID,function(){ 	
+											/*
+											var betting_team = "#bet-team"
+											$(betting_team).fadeIn(300);
+											
+											//Set the center alignment padding + border
+											var popMargTop = ($(betting_team).height() + 24) / 2; 
+											var popMargLeft = ($(betting_team).width() + 24) / 2; 
+											
+											$(betting_team).css({ 
+												'margin-top' : -popMargTop,
+												'margin-left' : -popMargLeft
+											});
+											
+											// Add the mask to body
+											$('body').append('<div id="mask"></div>');
+											$('#mask').fadeIn(300);
+											*/					
+											fromAddress = account_id;
+											passwd = pass ;
+											matchId = jQuery(this).attr("id");
+											contractAddress = jQuery(this).attr("contract_id");
+											var time = jQuery(this).attr("time");
+											if(jQuery(this).attr("team") == 'home'){
+												var betTeams = jQuery(this).prev().text();
+												var teamArr = betTeams.split("VS");
+												team = "home";
+												$("#teamName").text(teamArr[0]);
+												$("#teamRate").text("배당률"+jQuery(this).text());
+											} else {
+												var betTeams = jQuery(this).prev().prev().prev().text();
+												var teamArr = betTeams.split("VS");
+												team = "away";
+												$("#teamName").text(teamArr[1]);
+												$("#teamRate").text("배당률"+jQuery(this).text());
+											}
+											
+											
+											
+											var brurl = "/loadBetRate?matchID="+matchId;
+											var brquery = new XMLHttpRequest();
+											var parsedText;
+											brquery.open("GET", brurl, true);
+											brquery.onreadystatechange = function() {
+												  if (brquery.readyState == 4) {
+													if (brquery.status == 200) {
+														parsedText = JSON.parse(brquery.responseText);	
+														$("#betTime").text("시작시간 : " + date + time);
+														$("#betTeams").text(betTeams);
+														if(parsedText.length > 0){
+															homeTotal = parsedText[0].homeTeam;
+															awayTotal = parsedText[0].awayTeam;
+															$("#betTotalAmount").text("Total odd : "+(parsedText[0].homeTeam + parsedText[0].awayTeam));
+															$("#betHomeTeam").text(teamArr[0]);
+															$("#homeTeamRate").text("배당률"+(homeRate+1));															
+															$("#betAwayTeam").text(teamArr[1]);
+															$("#awayTeamRate").text("배당률"+(awayRate+1));
+															if(team == "home"){
+																selectedAmount = Number($("#betAmount option:selected").val());
+																$("#expectedAmount").text(selectedAmount * ((homeTotal+awayTotal+Number(selectedAmount))/(homeTotal+selectedAmount)).toFixed(2));
+															} else {
+																$("#expectedAmount").text(selectedAmount * ((homeTotal+awayTotal+Number(selectedAmount))/(awayTotal+selectedAmount)).toFixed(2));
+															}
+															
+														}															
+														else {
+															//배당률 0.
+															$("#betHomeTeam").text("배팅이 시작되지 않았습니다.");																					
+														}
+													}
+												  }
+											}
+											brquery.send();						
+											
+											
+										});
+									}
+									$("#tbody1").html(t);
+								}
+							  }
+						}
+						xquery.send();
+					<% }else{ %>
+										
+					xhr.open("GET", url, true);
+					xhr.onreadystatechange = function() {
+						  if (xhr.readyState == 4) {						
+							// JSON.parse does not evaluate the attacker's scripts.
+							var resp = JSON.parse(xhr.responseText);					
+							var t;
+							var match_id;
+							for(var i=0; i < resp.sport_events.length; i++){							
+									match_id = resp.sport_events[i].id.split(':')[2];																	
+									
+									t = t + "<tr><td>"+ resp.sport_events[i].scheduled.split('T')[0] +"</td><td>"
+									 + resp.sport_events[i].scheduled.split('T')[1] + "</td><td>"
+									 + resp.sport_events[i].tournament.name + "</td><td>"
+									 + resp.sport_events[i].competitors[0].name + " VS "
+									 + resp.sport_events[i].competitors[1].name + <% if(action == 'create'){ %> 
+									 "</td><td class='btn btn-secondary btn-sm' homeCode="+resp.sport_events[i].competitors[0].id + " awayCode="+ resp.sport_events[i].competitors[1].id + " index="+i+" id ="+match_id +">"
+									 + "배팅생성" + <% } %> "</td></tr>";
+																	 
+									 $("#tbody1").html(t);				
+								
+									
+									$(document).on("click","#"+match_id,function(){ 	
+										<% if(action == 'create'){ %>									
+											createContract(account_id, pass, jQuery(this).attr("id"), jQuery(this).attr("index"), jQuery(this).attr("homeCode"), jQuery(this).attr("awayCode"));
+										<% } %>
+									});
+								
+									
+							}	
+							
+						 }
+					}
+					
+					
+					xhr.send();	
+					<% } %>
+			}
+			
+		</script>
+		
+    </head>
+    <body>
+	<div id="login-box" class="login-popup">
+        <a href="#" class="close"><img src="/html/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+          <form method="post" class="signin" action="#">
+                <fieldset class="textbox">
+            	<label class="username">
+                <span>ID</span>
+                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="Username">
+                </label>
+                <label class="password">
+                <span>Password</span>
+                <input id="password" name="password" value="" type="password" placeholder="Password">
+                </label>
+                <button id = "signIn" class="submit button" type="button">Sign in</button>
+                <p>
+                 <a class="forgot" href="#">Forgot your password?</a>
+                </p>
+                </fieldset>
+          </form>  
+		</div>
+		
+		<div class="app" id="app">
+			<div class="header">
+				<div class="header-product-block">
+					<div class="logo">
+						<a class="logo" href="/index.html" style="font-family:verdana; font-style:oblique; color: orange; font-size:30px;">Sports Betting</a>
+					</div>
+					<nav class="bar">
+						<ul>
+							<li><a href="/games?action=select&game=soccer"> 경기 조회 </a></li>
+							<li><a href="/games?action=bet&game=soccer"> 구매 가능한 게임 </a></li>
+							<li><a href="/games?action=create&game=soccer"> 배팅 생성 </a></li>
+							<!--<li><a href="/games"> 적중결과 </a></li> -->
+							<div class="header-login-block" style="position: absolute; right: 0;">
+							<div class="user-admin ">
+								<a class="login-btn">Sign In</a>
+								<a class="login-btn login-window" id = "loginButton" href="#login-box">Login</a>
+							</div>
+							</div>
+							
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="main-wrapper">
+				<div class="left">
+					<div class="ui-widget">
+						<div class="ui-header">스포츠 목록</div>
+						<nav class="ui-body">
+							<ul>
+								<li><a href=javascript:loadDoc(1,'soccer') > Soccer</a></li>								
+								<li><a href=javascript:loadDoc(1,'lol') > E-Sports</a></li>
+								<li><a>Baseball</a></li>
+								<li><a>Basketball</a></li>
+							</ul>
+						</nav>
+					</div>
+					<div class="ui-widget">
+						<div class="ui-header">경기 목록</div>
+						<nav class="ui-body">
+							<ul>
+								<li><a>프리미어 리그</a></li>
+								<li><a>분데스리가</a></li>
+								<li><a>세리에 A</a></li>
+								<li><a>K리그</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<% if(action != 'bet'){ %> 
+				<div class="center2">
+				<% }else{ %>
+				<div class="center">
+				<% } %>
+					<div class = "sport-info">
+					<p>
+						<img src="html/images/t5.jpg" width='80%' height='150'>
+						</p>
+						<div id="checktest">
+						</div>
+					</div>
+					
+					<div class ="bet-content">
+					  <div class="bet-header">
+						<form name="form1">
+							<script> Today('null','null','null'); </script>
+							<button class="btn btn-sm btn-warning" type="button" onclick="loadDoc(1,1)">일정 조회</button>
+						</form>
+			
+					  </div>
+				  	  <table class="bet-table" cellspacing= "0">
+						  <tbody id='tbody1'>						  
+						  </tbody>
+					  </table>
+					</div>
+				</div>
+				<% if(action == 'bet'){ %>
+				<div class="right">
+					<div class="betslip">
+						<div class="betslip-tab">
+							<div>배팅 슬롯</div>
+						</div>					
+						<div class="betslip-table">
+							<div class="bet-table-con">
+								<div class="col-1"> 
+									<span id = "teamName" class="name">경기가 선택되지 않았습니다.</span>
+									<span id = "teamRate" class="div"></span>
+								</div>
+								<div id="betTime" class="col-2"></div>
+								<div id="betTeams" class="col-3"></div>
+							</div>
+							<div id="betTotalAmount" style="text-align:right">Total odd : 0&nbsp&nbsp&nbsp&nbsp</div>
+						</div>
+						<div class="betslip-amout">
+						
+							<span class="col-1">배팅금액</span>
+							<span class="col-2">
+								<select id="betAmount" onchange="chageEthSelect()">
+									<option value=1>1 eth</option>
+									<option value=5>5 eth</option>
+									<option value=10>10 eth</option>
+									<option value=25>25 eth</option>
+									<option value=50>50 eth</option>
+								</select>
+							</span>
+						</div>
+						<div class="betslip-examout">
+							<span class="col-1">예상 수령금액</span>
+							<span id="expectedAmount" class="col-2"></span>
+						</div>
+						<div class="betslip-button">
+							<button id="betButton" class="btn">배팅하기</button>
+						</div>
+					</div>
+				</div>
+				<% } %>
+			</div>
+		</div>
+    </body>
+</html>

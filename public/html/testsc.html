@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <br>
+            <div class="row m-t-1">
+                <div class="col-md-12">
+                    <a href="/html/select_game_schedule.html">경기 조회</a><br>
+					<a href="/select_game">구매 가능한 게임 </a><br>
+					<a href="/html/select_game_create.html">배팅 생성 </a><br>
+					<a href="/select_game">적중결과 </a>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>배팅 계약 생성</h3>
+                    <form id="deploy">
+                        <div class="form-group">
+                            <label>계정 ID: </label>
+                            <input type="text" class="form-control" id="fromAddress">
+                        </div>
+                        <div class="form-group">
+                            <label>비밀번호: </label>
+                            <input type="text" class="form-control" id="privateKey">
+                        </div>
+                        <div class="form-group">
+                            <label>경기 ID: </label>
+                            <input type="text" class="form-control" id="matchId">
+                        </div>
+                        <div class="form-group">
+                            <label>배팅 금액 단위: </label>
+                            <input type="text" class="form-control" id="betAmount">
+                        </div>
+                        <p id="message" style="word-wrap: break-word"></p>
+                        <input type="submit" value="계약생성" class="btn btn-primary" />
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <h3>배팅</h3>
+                    <form id="bet">
+                        <div class="form-group">
+                            <label>계정 ID: </label>
+                            <input type="text" class="form-control" id="fromAddress">
+                        </div>
+                        <div class="form-group">
+                            <label>비밀번호: </label>
+                            <input type="text" class="form-control" id="privateKey">
+                        </div>
+                        <div class="form-group">
+                            <label>계약 주소: </label>
+                            <input type="text" class="form-control" id="contractAddress">
+                        </div>
+                        <div class="form-group">
+                            <label>팀 선택: </label>
+                            <select class="form-control" id="team">
+                                <option>Home</option>
+                                <option>Away</option>
+                            </select>
+                        </div>
+                        <p id="message" style="word-wrap: break-word"></p>
+                        <input type="submit" value="배팅하기" class="btn btn-primary" />
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <h3>배팅 정보 확인</h3>
+                    <form id="find">
+                        <div class="form-group">
+                            <label>계약 주소: </label>
+                            <input type="text" class="form-control" id="contractAddress">
+                        </div>
+                        <p id="message"></p>
+                        <input type="submit" value="확인" class="btn btn-primary" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="/js/web3.min.js"></script>
+        <script type="text/javascript" src="/js/ethereumjs-tx.js"></script>
+        <script type="text/javascript" src="/js/main.js"></script>
+    </body>
+</html>
